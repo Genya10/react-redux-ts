@@ -1,18 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux"
-import { UseSelector } from "react-redux/es/hooks/useSelector"
-import { RootState } from "../store/reducers/rootReducer";
 import { useTypedSelector } from "../hooks/useTypedSelector";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchUsers } from "../store/action-creators/user";
+import { useActions } from "../hooks/useActions";
 
  const UserList:React.FC=()=>{
     const {users,error,loading} = useTypedSelector( state => state.user);
-    const dispatch = useDispatch();
+    const {fetchUsers}=useActions();
 
     useEffect(()=>{
-        dispatch(fetchUsers())
+        fetchUsers()
     },[])
    if(loading){
     return <h1>Loading...</h1>
@@ -24,7 +21,7 @@ import { fetchUsers } from "../store/action-creators/user";
 return(
     <div>
   {users.map(user=>
-  <div key={user.id}>{user.name}</div>
+  <div key={user.id}>{user.email}</div>
     )}
     </div>
 )
